@@ -69,6 +69,7 @@ const CharactersPage = () => {
     const handleResetForm = () => {
         setSearchInput('')
         getCharacters(page)
+        setSearchParams('')
     }
 
     useEffect(() => {
@@ -76,7 +77,7 @@ const CharactersPage = () => {
             setLoading(false)
             setError(null)
             getCharacters(page)
-            setSearchParams({ query: '' })
+
             return
         }
         searchCharacters(query, page)
