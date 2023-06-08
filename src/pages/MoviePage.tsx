@@ -4,6 +4,11 @@ import { useEffect, useState } from "react"
 import ListGroup from "react-bootstrap/ListGroup"
 import { SW_SingleMovieData } from "../types"
 import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+
 
 const MoviePage = () => {
     const [searchResult, setSearchResult] = useState<SW_SingleMovieData | null>(null)
@@ -43,13 +48,15 @@ const MoviePage = () => {
         <div className="movies">
             <Container className="py-3">
                 {searchResult && (
-
-                    <div className="search-result">
+                    <div className="search-result" >
                         <ListGroup className="mb-3">
                             <ListGroup.Item
+                                className="glass"
                                 key={searchResult.id}
                             >
                                 <h2>{searchResult.title}</h2>
+                                <hr />
+
                                 <p>
                                     Episode: {searchResult.episode_id}
                                 </p>
@@ -69,7 +76,7 @@ const MoviePage = () => {
                                     {searchResult.characters.map(data =>
                                         <ListGroup.Item
                                             action
-                                            href={''}
+                                            href={`/characters/${data.id}`}
                                             key={data.id}
                                         >
                                             <p>{data.name}</p>
