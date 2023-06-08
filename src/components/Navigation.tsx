@@ -9,9 +9,9 @@ const Navigation = () => {
             <Container>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-start">
-                        <Nav.Link as={NavLink} end to="/movies">Movies</Nav.Link>
-                        <Nav.Link as={NavLink} end to="/characters">Characters</Nav.Link>
-                        <Nav.Link as={NavLink} end to="/planets">Planets</Nav.Link>
+                        <Nav.Link as={NavLink} to="/movies">Movies</Nav.Link>
+                        <Nav.Link as={NavLink} to="/characters">Characters</Nav.Link>
+                        <Nav.Link as={NavLink} to="/planets">Planets</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Brand as={Link} to="/">
@@ -27,9 +27,9 @@ const Navigation = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
-                        <Nav.Link as={NavLink} end to="/species">Species</Nav.Link>
-                        <Nav.Link as={NavLink} end to="/starships">Starships</Nav.Link>
-                        <Nav.Link as={NavLink} end to="/vehicles">Vehicles</Nav.Link>
+                        <Nav.Link as={NavLink} to="/species">Species</Nav.Link>
+                        <Nav.Link as={NavLink} to="/starships">Starships</Nav.Link>
+                        <Nav.Link as={NavLink} to="/vehicles">Vehicles</Nav.Link>
 
                     </Nav>
                 </Navbar.Collapse>

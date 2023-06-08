@@ -2,7 +2,7 @@ import { SW_CharacterData, SW_MoviesData } from "."
 
 export type SW_PlanetsSearchResponse = {
     current_page: number
-    data: SW_CharacterData[]
+    data: SW_PlanetsData[]
     first_page_url: string
     from: number
     last_page: number
