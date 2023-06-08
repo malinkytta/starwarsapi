@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import * as SW_API from '../services/StarWarsAPI'
 import { SW_MovieSearchResponse } from '../types'
-import ListGroup from 'react-bootstrap/ListGroup'
-import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useSearchParams } from 'react-router-dom'
 import Pagination from '../components/Pagination'
@@ -10,6 +8,7 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
+import Search from '../components/Search'
 
 const MoviesPage = () => {
     const [error, setError] = useState<string | null>(null)
@@ -91,40 +90,14 @@ const MoviesPage = () => {
             <Container className="py-3">
                 <div className="bg-card py-4 px-4">
                     <h1>Movies</h1>
-                    <Form
-                        className="mb-4"
-                        onSubmit={handleSubmit}
-                    >
-                        <Form.Group className="mb-3" controlId="searchQuery">
-                            <Form.Label>Search Query</Form.Label>
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="May the search be with you..."
-                                onChange={e => setSearchInput(e.target.value)}
-                                value={searchInput}
-                            />
-                        </Form.Group>
 
-                        <div className="d-flex justify-content-end gap-2" >
-                            <Button
-                                variant="dark"
-                                type="submit"
-                                disabled={!searchInput.trim().length}
-                                className="border border-dark"
-                            >
-                                Search
-                            </Button>
+                    <Search
+                        handleSubmit={handleSubmit}
+                        searchInput={searchInput}
+                        setSearchInput={setSearchInput}
+                        handleResetForm={handleResetForm}
+                    />
 
-                            <Button
-                                variant='dark'
-                                onClick={handleResetForm}
-                            >
-                                Reset
-
-                            </Button>
-                        </div>
-                    </Form>
                 </div>
 
                 {error && <div>{error}</div>}
