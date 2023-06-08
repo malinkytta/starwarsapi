@@ -9,16 +9,20 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import { SW_CharacterSearchResponse } from '../types/characters'
+import Search from '../components/Search'
 
 const CharactersPage = () => {
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
-    const [page, setPage] = useState(1)
+    // const [page, setPage] = useState(1)
     const [searchInput, setSearchInput] = useState('')
     const [searchResult, setSearchResult] = useState<SW_CharacterSearchResponse | null>(null)
     const [searchParams, setSearchParams] = useSearchParams()
 
     const query = searchParams.get('query')
+    const page = Number(searchParams.get('page') ?? 1)
+
+    const newSearchParams = new URLSearchParams(searchParams.toString());
 
     const getCharacters = async (searchPage: number) => {
         setLoading(true)
@@ -60,16 +64,27 @@ const CharactersPage = () => {
             return
         }
 
-        setPage(1)
+        // setPage(1)
 
-        searchCharacters(searchInput, 1)
-        setSearchParams({ query: searchInput })
+        newSearchParams.set('query', searchInput)
+        newSearchParams.set('page', String(page))
+
+        // searchCharacters(searchInput, 1)
+        // setSearchParams({ query: searchInput, page: 1 })
+        setSearchParams(newSearchParams)
+
     }
 
     const handleResetForm = () => {
         setSearchInput('')
         getCharacters(page)
         setSearchParams('')
+    }
+
+    const togglePage = (page: number) => {
+        newSearchParams.set('query', searchInput)
+        newSearchParams.set('page', String(page))
+        setSearchParams(newSearchParams)
     }
 
     useEffect(() => {
@@ -84,45 +99,19 @@ const CharactersPage = () => {
 
     }, [query, page])
 
+    window.scrollTo(0, 0)
+
     return (
         <div className="characters">
             <Container className="py-3">
                 <div className="bg-card py-4 px-4">
                     <h1>Characters</h1>
-                    <Form
-                        className="mb-4"
-                        onSubmit={handleSubmit}
-                    >
-                        <Form.Group className="mb-3" controlId="searchQuery">
-                            <Form.Label>Search Query</Form.Label>
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="May the search be with you..."
-                                onChange={e => setSearchInput(e.target.value)}
-                                value={searchInput}
-                            />
-                        </Form.Group>
-
-                        <div className="d-flex justify-content-end gap-2" >
-                            <Button
-                                variant="dark"
-                                type="submit"
-                                disabled={!searchInput.trim().length}
-                                className="border border-dark"
-                            >
-                                Search
-                            </Button>
-
-                            <Button
-                                variant='dark'
-                                onClick={handleResetForm}
-                            >
-                                Reset
-
-                            </Button>
-                        </div>
-                    </Form >
+                    <Search
+                        handleSubmit={handleSubmit}
+                        searchInput={searchInput}
+                        setSearchInput={setSearchInput}
+                        handleResetForm={handleResetForm}
+                    />
                 </div>
 
                 {error && <div>{error}</div>}
@@ -140,6 +129,7 @@ const CharactersPage = () => {
 
                                         <Card.Body>
                                             <Card.Title>{data.name}</Card.Title>
+                                            <hr />
                                             <Card.Text>
                                                 Species:  {data.species_count}
                                             </Card.Text>
@@ -164,8 +154,8 @@ const CharactersPage = () => {
                             totalPages={searchResult.last_page}
                             hasPreviousPage={page > 1}
                             hasNextPage={page < searchResult.last_page}
-                            onPreviousPage={() => { setPage(prevValue => prevValue - 1) }}
-                            onNextPage={() => { setPage(prevValue => prevValue + 1) }}
+                            onPreviousPage={() => togglePage(page - 1)}
+                            onNextPage={() => togglePage(page + 1)}
                         />
 
                     </div>

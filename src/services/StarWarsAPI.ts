@@ -13,6 +13,12 @@ const get = async<T>(endpoint: string) => {
     return res.data as T
 }
 
+
+/**
+ * 
+ * @param page Films
+ * @returns 
+ */
 export const getMovies = async (page: number) => {
     return get<SW_MovieSearchResponse>(`/films?page=${page}`)
 }
@@ -23,6 +29,13 @@ export const getMovie = async (movieId: number) => {
 export const searchMovies = async (query: string, page: number) => {
     return get<SW_MovieSearchResponse>(`/films/?search=${query}&page=${page}`)
 }
+
+
+/**
+ * 
+ * @param page People
+ * @returns 
+ */
 
 export const getCharacters = async (page: number) => {
     return get<SW_CharacterSearchResponse>(`/people?page=${page}`)

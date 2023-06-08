@@ -19,12 +19,13 @@ const MoviesPage = () => {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const query = searchParams.get('query')
+    // const page = Number(searchParams.get('page') ?? 1)
 
-    const getMovies = async (page = 1) => {
+    const getMovies = async (searchPage: number) => {
         setLoading(true)
 
         try {
-            const data = await SW_API.getMovies(page)
+            const data = await SW_API.getMovies(searchPage)
             setSearchResult(data)
 
         } catch (err: any) {
@@ -34,13 +35,13 @@ const MoviesPage = () => {
         setLoading(false)
     }
 
-    const searchMovies = async (searchQuery: string, page: number) => {
+    const searchMovies = async (searchQuery: string, searchPage: number) => {
         setError(null)
         setLoading(true)
         setSearchResult(null)
 
         try {
-            const data = await SW_API.searchMovies(searchQuery, page)
+            const data = await SW_API.searchMovies(searchQuery, searchPage)
             console.log(data)
 
             setSearchResult(data)
@@ -68,7 +69,7 @@ const MoviesPage = () => {
 
     const handleResetForm = () => {
         setSearchInput('')
-        getMovies()
+        getMovies(page)
         setSearchParams('')
     }
 
@@ -76,14 +77,12 @@ const MoviesPage = () => {
         if (!query) {
             setLoading(false)
             setError(null)
-            getMovies()
+            getMovies(page)
             return
         }
         searchMovies(query, page)
 
     }, [query, page])
-
-
 
     return (
         <div className="movies">
@@ -115,6 +114,7 @@ const MoviesPage = () => {
 
                                         <Card.Body>
                                             <Card.Title>{data.title}</Card.Title>
+                                            <hr />
                                             <Card.Text>
                                                 Episode: {data.episode_id}
                                             </Card.Text>
@@ -157,7 +157,7 @@ const MoviesPage = () => {
                         <Pagination
                             page={searchResult.current_page}
                             totalPages={searchResult.last_page}
-                            hasPreviousPage={page < searchResult.last_page}
+                            hasPreviousPage={page > 1}
                             hasNextPage={page < searchResult.last_page}
                             onPreviousPage={() => { setPage(prevValue => prevValue - 1) }}
                             onNextPage={() => { setPage(prevValue => prevValue + 1) }}
