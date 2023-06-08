@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import * as SW_API from '../services/StarWarsAPI'
-import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useSearchParams } from 'react-router-dom'
 import Pagination from '../components/Pagination'
@@ -8,7 +7,7 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
-import { SW_CharacterSearchResponse } from '../types/characters'
+import { SW_CharacterSearchResponse } from '../types/index'
 import Search from '../components/Search'
 
 const CharactersPage = () => {
@@ -69,7 +68,7 @@ const CharactersPage = () => {
         newSearchParams.set('query', searchInput)
         newSearchParams.set('page', String(page))
 
-        // searchCharacters(searchInput, 1)
+        searchCharacters(searchInput, page)
         // setSearchParams({ query: searchInput, page: 1 })
         setSearchParams(newSearchParams)
 
@@ -92,7 +91,6 @@ const CharactersPage = () => {
             setLoading(false)
             setError(null)
             getCharacters(page)
-
             return
         }
         searchCharacters(query, page)
@@ -112,6 +110,8 @@ const CharactersPage = () => {
                         setSearchInput={setSearchInput}
                         handleResetForm={handleResetForm}
                     />
+                    {query && searchResult && <p>Showing {searchResult?.total} search results for "{query}"</p>}
+
                 </div>
 
                 {error && <div>{error}</div>}
@@ -119,7 +119,6 @@ const CharactersPage = () => {
 
                 {searchResult && (
                     <div id="characters" className="py-3">
-                        {query && <p>Showing {searchResult.total} search results for "{query}"</p>}
 
                         <Row xs={1} md={2} lg={3} className="g-4">
                             {searchResult.data.map(data => (
@@ -137,7 +136,7 @@ const CharactersPage = () => {
                                                 Birth year: {data.birth_year}
                                             </Card.Text>
                                             <Card.Text>
-                                                Starring in:  {data.films_count} films
+                                                Starring in:  {data.films_count} movies
                                             </Card.Text>
                                             <Button
                                                 variant="dark"

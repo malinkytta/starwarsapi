@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import ListGroup from "react-bootstrap/ListGroup"
 import { SW_SingleMovieData } from "../types"
 import Container from 'react-bootstrap/Container'
-import { SW_SingleCharacterData } from "../types/characters"
+import { SW_SingleCharacterData } from "../types/index"
 
 const CharacterPage = () => {
     const [searchResult, setSearchResult] = useState<SW_SingleCharacterData | null>(null)
@@ -73,17 +73,17 @@ const CharacterPage = () => {
 
 
                                 <p>
-                                    Characters:
+                                    Movies:
                                 </p>
                                 <ListGroup>
-                                    {/* {searchResult.characters.map(data =>
+                                    {searchResult.films.map(data =>
                                         <ListGroup.Item
                                             action
-                                            href={''}
+                                            href={`/movies/${data.id}`}
                                             key={data.id}
                                         >
-                                            <p>{data.name}</p>
-                                        </ListGroup.Item>)} */}
+                                            <p>{data.title}</p>
+                                        </ListGroup.Item>)}
                                 </ListGroup>
 
                             </ListGroup.Item>
