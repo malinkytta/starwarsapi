@@ -17,21 +17,42 @@ h6 {
 
 #App {
     // background: url('/src/assets/images/background.jpg');
+    background: rgb(36, 27, 19, 0.7);
+
     background-size: cover;
     // background-position: center;
 }
 
 .homepage {
     height: 100vh;
-    background: url('/src/assets/images/barrington-ratliff-MVtjq6SnT1A-unsplash.jpg');
+    background: url('/src/assets/images/scott-gummerson-WwAUvVTb2Cw-unsplash.jpg');
     background-size: cover;
     background-position: center;
 
+    color: white;
+    text-align: center;
+
+    .title {
+        // height: 50vh;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10.9px);
+        -webkit-backdrop-filter: blur(10.9px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10.9px);
+    text-align: center;
 }
 
 .not-found {
-    background: url('src/assets/images/jake-weirick-Q_RBVFFXR_g-unsplash.jpg');
+    background: url('/src/assets/images/jake-weirick-Q_RBVFFXR_g-unsplash.jpg');
     height: 100vh;
+    color: #fff;
 }
 
 .movies {
@@ -39,9 +60,25 @@ h6 {
     background-size: cover;
 }
 
+.bg-card {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10.9px);
+    -webkit-backdrop-filter: blur(10.9px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .characters {
-    background: url('/src/assets/images/background.jpg');
+    background: url('/src/assets/images/kadyn-pierce-WoTF4k1YQn8-unsplash.jpg');
     background-size: cover;
+}
+
+.planets {
+    background: url('/src/assets/images/albina-andreeva-zybYFsqSbUI-unsplash.jpg');
+    background-size: cover;
+    // background-position: top;
+
 }
 
 .glass {

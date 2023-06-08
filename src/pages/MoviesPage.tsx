@@ -70,6 +70,7 @@ const MoviesPage = () => {
     const handleResetForm = () => {
         setSearchInput('')
         getMovies()
+        setSearchParams('')
     }
 
     useEffect(() => {
@@ -83,44 +84,48 @@ const MoviesPage = () => {
 
     }, [query, page])
 
+
+
     return (
         <div className="movies">
             <Container className="py-3">
-                <h1>Movies</h1>
-                <Form
-                    className="mb-4"
-                    onSubmit={handleSubmit}
-                >
-                    <Form.Group className="mb-3" controlId="searchQuery">
-                        <Form.Label>Search Query</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            placeholder="May the search be with you..."
-                            onChange={e => setSearchInput(e.target.value)}
-                            value={searchInput}
-                        />
-                    </Form.Group>
+                <div className="bg-card py-4 px-4">
+                    <h1>Movies</h1>
+                    <Form
+                        className="mb-4"
+                        onSubmit={handleSubmit}
+                    >
+                        <Form.Group className="mb-3" controlId="searchQuery">
+                            <Form.Label>Search Query</Form.Label>
+                            <Form.Control
+                                required
+                                type="text"
+                                placeholder="May the search be with you..."
+                                onChange={e => setSearchInput(e.target.value)}
+                                value={searchInput}
+                            />
+                        </Form.Group>
 
-                    <div className="d-flex justify-content-end gap-2" >
-                        <Button
-                            variant="dark"
-                            type="submit"
-                            disabled={!searchInput.trim().length}
-                            className="border border-dark"
-                        >
-                            Search
-                        </Button>
+                        <div className="d-flex justify-content-end gap-2" >
+                            <Button
+                                variant="dark"
+                                type="submit"
+                                disabled={!searchInput.trim().length}
+                                className="border border-dark"
+                            >
+                                Search
+                            </Button>
 
-                        <Button
-                            variant='dark'
-                            onClick={handleResetForm}
-                        >
-                            Reset
+                            <Button
+                                variant='dark'
+                                onClick={handleResetForm}
+                            >
+                                Reset
 
-                        </Button>
-                    </div>
-                </Form >
+                            </Button>
+                        </div>
+                    </Form>
+                </div>
 
                 {error && <div>{error}</div>}
                 {loading && (<p>Loading...</p>)}
@@ -184,12 +189,11 @@ const MoviesPage = () => {
                             onPreviousPage={() => { setPage(prevValue => prevValue - 1) }}
                             onNextPage={() => { setPage(prevValue => prevValue + 1) }}
                         />
-                        {/* </div> */}
                     </div>
                 )
                 }
             </Container>
-        </div>
+        </div >
     )
 }
 
