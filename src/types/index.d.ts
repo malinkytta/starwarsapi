@@ -1,1 +1,6 @@
 export * from './movies_api'
+export * from './characters_api'
+export * from './planets_api'
+export * from './species_api'
+export * from './starships_api'
+export * from './vehicles_api'

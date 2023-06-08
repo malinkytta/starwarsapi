@@ -1,6 +1,4 @@
-import { SW_Characters } from './characters'
-
-export * from './characters_api'
+import { SW_Characters } from './characters_api'
 
 export type SW_MovieSearchResponse = {
     current_page: number
