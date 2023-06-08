@@ -30,7 +30,15 @@ export type SW_CharacterData = {
     homeworld: Id_Name
 }
 
-export type SW_SingleCharacterData = SW_CharacterData & {
+export type SW_SingleCharacterData = {
+    id: number
+    name: string
+    birth_year: string
+    eye_color: string
+    hair_color: string
+    height: string
+    mass: number
+    homeworld: Id_Name
     films: Films[]
     species: Id_Name[]
     starships: Id_Name[]
