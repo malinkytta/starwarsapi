@@ -9,7 +9,14 @@ import {
     SW_CharacterSearchResponse,
     SW_SingleCharacterData,
     SW_PlanetsSearchResponse,
-    SW_SinglePlanetData
+    SW_SinglePlanetData,
+    SW_SpeciesSearchResponse,
+    SW_SingleSpeciesData,
+    SW_StarshipsResponse,
+    SW_SingleStarshipsData,
+    SW_VehiclesSearchResponse,
+    SW_SingleVehicleData
+
 } from '../types/index'
 
 const BASE_URL = 'https://swapi.thehiveresistance.com/api'
@@ -72,3 +79,60 @@ export const getPlanet = async (planetId: number) => {
 export const searchPlanets = async (query: string, page: number) => {
     return get<SW_PlanetsSearchResponse>(`/planets/?search=${query}&page=${page}`)
 }
+
+
+/**
+ * 
+ * @param page Species
+ * @returns 
+ */
+
+export const getSpecies = async (page: number) => {
+    return get<SW_SpeciesSearchResponse>(`/species?page=${page}`)
+}
+
+export const getSpecie = async (specieId: number) => {
+    return get<SW_SingleSpeciesData>(`/species/${specieId}`)
+}
+
+export const searchSpecies = async (query: string, page: number) => {
+    return get<SW_SpeciesSearchResponse>(`/species/?search=${query}&page=${page}`)
+}
+
+/**
+ * 
+ * @param page Starships
+ * @returns 
+ */
+
+export const getStarships = async (page: number) => {
+    return get<SW_StarshipsResponse>(`/starships?page=${page}`)
+}
+
+export const getStarship = async (starshipId: number) => {
+    return get<SW_SingleStarshipsData>(`/starships/${starshipId}`)
+}
+
+export const searchStarship = async (query: string, page: number) => {
+    return get<SW_StarshipsResponse>(`/starships/?search=${query}&page=${page}`)
+}
+
+
+/**
+ * 
+ * @param page Vehicles
+ * @returns 
+ */
+
+export const getVehicles = async (page: number) => {
+    return get<SW_VehiclesSearchResponse>(`/vehicles?page=${page}`)
+}
+
+export const getVehicle = async (vehicleId: number) => {
+    return get<SW_SingleVehicleData>(`/vehicles/${vehicleId}`)
+}
+
+export const searchVehicles = async (query: string, page: number) => {
+    return get<SW_VehiclesSearchResponse>(`/vehicles/?search=${query}&page=${page}`)
+}
+
