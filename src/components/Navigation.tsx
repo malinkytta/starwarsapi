@@ -5,7 +5,7 @@ import { NavLink, Link } from 'react-router-dom'
 
 const Navigation = () => {
     return (
-        <Navbar bg="dark" variant="dark" expand="md" className="justify-content-evenly">
+        <Navbar variant="dark" sticky="top" expand="md" className="justify-content-center">
             <Container>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-start">
@@ -16,7 +16,7 @@ const Navigation = () => {
                 </Navbar.Collapse>
                 <Navbar.Brand as={Link} to="/">
                     <img
-                        src="src/assets/images/star-wars-logo-1002.png"
+                        src="/src/assets/images/star-wars-logo-1002.png"
                         // width="100"
                         height="60"
                         className="d-inline-block align-top"
