@@ -44,6 +44,8 @@ const MoviePage = () => {
         )
     }
 
+
+
     return (
         <div className="movies">
             <Container className="py-3">
@@ -57,31 +59,41 @@ const MoviePage = () => {
                                 <h2>{searchResult.title}</h2>
                                 <hr />
 
+                                <p> <strong> Episode: </strong>{searchResult.episode_id} </p>
                                 <p>
-                                    Episode: {searchResult.episode_id}
+                                    <strong>Director: </strong>{searchResult.director}
                                 </p>
                                 <p>
-                                    Director: {searchResult.director}
+                                    <strong> Producer: </strong>{searchResult.producer}
                                 </p>
                                 <p>
-                                    Producer: {searchResult.producer}
+                                    <strong>  Realease date: </strong>{searchResult.release_date}
                                 </p>
-                                <p>
-                                    Realease date: {searchResult.release_date}
-                                </p>
-                                <p>
-                                    Characters:
-                                </p>
-                                <ListGroup>
-                                    {searchResult.characters.map(data =>
-                                        <ListGroup.Item
-                                            action
-                                            href={`/characters/${data.id}`}
-                                            key={data.id}
-                                        >
-                                            <p>{data.name}</p>
-                                        </ListGroup.Item>)}
-                                </ListGroup>
+                                <h3>Opening</h3>
+                                {searchResult.opening_crawl.split("\r\n\r").map(function (item, index) {
+                                    return (
+                                        <p key={index}>
+                                            {item}
+                                        </p>
+                                    )
+                                })}
+
+                                {/* <ListGroup> */}
+                                <h3>Characters</h3>
+
+                                <Row xs={1} md={2} lg={4} className="g-4">
+                                    {searchResult.characters.map(data => (
+                                        <Col key={data.id}>
+                                            <Card as={Link} to={`/characters/${data.id}`} className="card-hover">
+                                                <Card.Body>
+                                                    <Card.Text>{data.name}</Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
+
+                                {/* </ListGroup> */}
 
                             </ListGroup.Item>
                         </ListGroup>
