@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import Search from '../components/Search'
+import Loading from '../components/Loading'
 
 const MoviesPage = () => {
     const [error, setError] = useState<string | null>(null)
@@ -42,7 +43,6 @@ const MoviesPage = () => {
 
         try {
             const data = await SW_API.searchMovies(searchQuery, searchPage)
-            console.log(data)
 
             setSearchResult(data)
             setLoading(false)
@@ -84,8 +84,12 @@ const MoviesPage = () => {
 
     }, [query, page])
 
+
+
     return (
+
         <div className="movies">
+
             <Container className="py-3">
                 <div className="bg-card py-4 px-4">
                     <h1>Movies</h1>
@@ -96,15 +100,20 @@ const MoviesPage = () => {
                         setSearchInput={setSearchInput}
                         handleResetForm={handleResetForm}
                     />
-
+                    {query && searchResult && <p>Showing {searchResult.total} search results for "{query}"</p>}
                 </div>
 
                 {error && <div>{error}</div>}
-                {loading && (<p>Loading...</p>)}
+
+                {/* {loading && (<img src="src/assets/images/stormtrooper-star-wars.gif" alt="" />
+                )} */}
+
+                {loading && <Loading show={loading}></Loading>}
+
+
 
                 {searchResult && (
                     <div id="movies" className="py-3">
-                        {query && <p>Showing {searchResult.data.length} search results for "{query}"</p>}
 
                         <Row xs={1} md={2} lg={3} className="g-4">
                             {searchResult.data.map(data => (
