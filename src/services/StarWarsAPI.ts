@@ -12,7 +12,7 @@ import {
     SW_SinglePlanetData,
     SW_SpeciesSearchResponse,
     SW_SingleSpeciesData,
-    SW_StarshipsResponse,
+    SW_StarshipsSearchResponse,
     SW_SingleStarshipsData,
     SW_VehiclesSearchResponse,
     SW_SingleVehicleData
@@ -26,6 +26,7 @@ const get = async<T>(endpoint: string) => {
     return res.data as T
 }
 
+const perPage = "per_page=9"
 
 /**
  * 
@@ -33,14 +34,16 @@ const get = async<T>(endpoint: string) => {
  * @returns 
  */
 export const getMovies = async (page: number) => {
-    return get<SW_MovieSearchResponse>(`/films?page=${page}`)
+    const res = get<SW_MovieSearchResponse>(`/films?${perPage}&page=${page}`)
+    await new Promise(r => setTimeout(r, 2000))
+    return res
 }
 export const getMovie = async (movieId: number) => {
     return get<SW_SingleMovieData>(`/films/${movieId}`)
 }
 
 export const searchMovies = async (query: string, page: number) => {
-    return get<SW_MovieSearchResponse>(`/films/?search=${query}&page=${page}`)
+    return get<SW_MovieSearchResponse>(`/films/?${perPage}&search=${query}&page=${page}`)
 }
 
 
@@ -51,7 +54,7 @@ export const searchMovies = async (query: string, page: number) => {
  */
 
 export const getCharacters = async (page: number) => {
-    return get<SW_CharacterSearchResponse>(`/people?page=${page}`)
+    return get<SW_CharacterSearchResponse>(`/people?${perPage}&page=${page}`)
 }
 
 export const getCharacter = async (characterId: number) => {
@@ -59,7 +62,7 @@ export const getCharacter = async (characterId: number) => {
 }
 
 export const searchCharacters = async (query: string, page: number) => {
-    return get<SW_CharacterSearchResponse>(`/people/?search=${query}&page=${page}`)
+    return get<SW_CharacterSearchResponse>(`/people/?${perPage}&search=${query}&page=${page}`)
 }
 
 /**
@@ -69,7 +72,7 @@ export const searchCharacters = async (query: string, page: number) => {
  */
 
 export const getPlanets = async (page: number) => {
-    return get<SW_PlanetsSearchResponse>(`/planets?page=${page}`)
+    return get<SW_PlanetsSearchResponse>(`/planets?${perPage}&page=${page}`)
 }
 
 export const getPlanet = async (planetId: number) => {
@@ -77,7 +80,7 @@ export const getPlanet = async (planetId: number) => {
 }
 
 export const searchPlanets = async (query: string, page: number) => {
-    return get<SW_PlanetsSearchResponse>(`/planets/?search=${query}&page=${page}`)
+    return get<SW_PlanetsSearchResponse>(`/planets/?${perPage}&search=${query}&page=${page}`)
 }
 
 
@@ -88,7 +91,7 @@ export const searchPlanets = async (query: string, page: number) => {
  */
 
 export const getSpecies = async (page: number) => {
-    return get<SW_SpeciesSearchResponse>(`/species?page=${page}`)
+    return get<SW_SpeciesSearchResponse>(`/species?${perPage}&page=${page}`)
 }
 
 export const getSpecie = async (specieId: number) => {
@@ -96,7 +99,7 @@ export const getSpecie = async (specieId: number) => {
 }
 
 export const searchSpecies = async (query: string, page: number) => {
-    return get<SW_SpeciesSearchResponse>(`/species/?search=${query}&page=${page}`)
+    return get<SW_SpeciesSearchResponse>(`/species/?${perPage}&search=${query}&page=${page}`)
 }
 
 /**
@@ -106,15 +109,15 @@ export const searchSpecies = async (query: string, page: number) => {
  */
 
 export const getStarships = async (page: number) => {
-    return get<SW_StarshipsResponse>(`/starships?page=${page}`)
+    return get<SW_StarshipsSearchResponse>(`/starships?${perPage}&page=${page}`)
 }
 
 export const getStarship = async (starshipId: number) => {
     return get<SW_SingleStarshipsData>(`/starships/${starshipId}`)
 }
 
-export const searchStarship = async (query: string, page: number) => {
-    return get<SW_StarshipsResponse>(`/starships/?search=${query}&page=${page}`)
+export const searchStarships = async (query: string, page: number) => {
+    return get<SW_StarshipsSearchResponse>(`/starships/?${perPage}&search=${query}&page=${page}`)
 }
 
 
@@ -125,7 +128,7 @@ export const searchStarship = async (query: string, page: number) => {
  */
 
 export const getVehicles = async (page: number) => {
-    return get<SW_VehiclesSearchResponse>(`/vehicles?page=${page}`)
+    return get<SW_VehiclesSearchResponse>(`/vehicles?${perPage}page=${page}`)
 }
 
 export const getVehicle = async (vehicleId: number) => {
@@ -133,6 +136,6 @@ export const getVehicle = async (vehicleId: number) => {
 }
 
 export const searchVehicles = async (query: string, page: number) => {
-    return get<SW_VehiclesSearchResponse>(`/vehicles/?search=${query}&page=${page}`)
+    return get<SW_VehiclesSearchResponse>(`/vehicles/?${perPage}&search=${query}&page=${page}`)
 }
 
