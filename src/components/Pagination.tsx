@@ -4,8 +4,8 @@ import Button from 'react-bootstrap/Button'
 interface IPaginationProps {
     page: number
     totalPages: number
-    hasPreviousPage: boolean
-    hasNextPage: boolean
+    hasPreviousPage: string | null
+    hasNextPage: string | null
     onPreviousPage: () => void
     onNextPage: () => void
 }
