@@ -7,15 +7,18 @@ export type SW_PlanetsSearchResponse = {
     from: number
     last_page: number
     last_page_url: string
-    links: []
+    links: [{
+        url: string
+        label: string
+        active: boolean
+    }]
     next_page_url: string | null
     path: string
     per_page: number
-    prev_page_url: number | null
+    prev_page_url: string | null
     to: number
     total: number
 }
-
 
 export type SW_PlanetsData = {
     id: number
@@ -35,4 +38,9 @@ export type SW_SinglePlanetData = {
     population: string
     residents: SW_CharacterData[]
     films: SW_MoviesData[]
+}
+
+export type SW_Planet = {
+    id: number
+    name: string
 }

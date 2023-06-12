@@ -128,7 +128,7 @@ export const searchStarships = async (query: string, page: number) => {
  */
 
 export const getVehicles = async (page: number) => {
-    return get<SW_VehiclesSearchResponse>(`/vehicles?${perPage}page=${page}`)
+    return get<SW_VehiclesSearchResponse>(`/vehicles?${perPage}&page=${page}`)
 }
 
 export const getVehicle = async (vehicleId: number) => {
