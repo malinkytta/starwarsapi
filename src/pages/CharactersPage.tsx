@@ -9,11 +9,14 @@ import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import { SW_CharacterSearchResponse } from '../types/index'
 import Search from '../components/Search'
+import Loading from '../components/Loading'
+import ErrorComponent from '../components/Error'
+
 
 const CharactersPage = () => {
     const [error, setError] = useState<string | null>(null)
+    const [showErr, setShowErr] = useState(false)
     const [loading, setLoading] = useState(false)
-    // const [page, setPage] = useState(1)
     const [searchInput, setSearchInput] = useState('')
     const [searchResult, setSearchResult] = useState<SW_CharacterSearchResponse | null>(null)
     const [searchParams, setSearchParams] = useSearchParams()
@@ -21,10 +24,17 @@ const CharactersPage = () => {
     const query = searchParams.get('query')
     const page = Number(searchParams.get('page') ?? 1)
 
-    const newSearchParams = new URLSearchParams(searchParams.toString());
+    const newSearch = (searchInput: string, page: string) => {
+        const newSearchParams = new URLSearchParams(searchParams.toString())
+        newSearchParams.set('query', searchInput)
+        newSearchParams.set('page', String(page))
+        setSearchParams(newSearchParams)
+    }
 
     const getCharacters = async (searchPage: number) => {
         setLoading(true)
+        setError(null)
+        setShowErr(false)
 
         try {
             const data = await SW_API.getCharacters(searchPage)
@@ -32,26 +42,26 @@ const CharactersPage = () => {
 
         } catch (err: any) {
             setError(err.message)
-            console.log(err.message)
+            setShowErr(true)
         }
         setLoading(false)
     }
 
     const searchCharacters = async (searchQuery: string, searchPage: number) => {
         setError(null)
+        setShowErr(false)
         setLoading(true)
         setSearchResult(null)
 
         try {
             const data = await SW_API.searchCharacters(searchQuery, searchPage)
-            console.log(data)
 
             setSearchResult(data)
             setLoading(false)
         }
         catch (err: any) {
             setError(err.message)
-            console.log(err.message)
+            setShowErr(true)
         }
         setLoading(false)
     }
@@ -63,15 +73,8 @@ const CharactersPage = () => {
             return
         }
 
-        // setPage(1)
-
-        newSearchParams.set('query', searchInput)
-        newSearchParams.set('page', String(page))
-
-        searchCharacters(searchInput, page)
-        // setSearchParams({ query: searchInput, page: 1 })
-        setSearchParams(newSearchParams)
-
+        searchCharacters(searchInput, 1)
+        newSearch(searchInput, String(1))
     }
 
     const handleResetForm = () => {
@@ -80,17 +83,12 @@ const CharactersPage = () => {
         setSearchParams('')
     }
 
-    const togglePage = (page: number) => {
-        newSearchParams.set('query', searchInput)
-        newSearchParams.set('page', String(page))
-        setSearchParams(newSearchParams)
-    }
-
     useEffect(() => {
         if (!query) {
             setLoading(false)
             setError(null)
             getCharacters(page)
+            setSearchInput('')
             return
         }
         searchCharacters(query, page)
@@ -100,43 +98,43 @@ const CharactersPage = () => {
     window.scrollTo(0, 0)
 
     return (
+
         <div className="characters">
+            <Loading show={loading}></Loading>
+            <ErrorComponent show={showErr}>{error}</ErrorComponent>
+
             <Container className="py-3">
                 <div className="bg-card py-4 px-4">
                     <h1>Characters</h1>
+
                     <Search
                         handleSubmit={handleSubmit}
                         searchInput={searchInput}
                         setSearchInput={setSearchInput}
                         handleResetForm={handleResetForm}
                     />
-                    {query && searchResult && <p>Showing {searchResult?.total} search results for "{query}"</p>}
+                    {searchResult && (query ? <p>Showing {searchResult.total} search results for "{query}"</p> : <p> {searchResult.total} characters</p>)}
 
                 </div>
-
-                {error && <div>{error}</div>}
-                {loading && (<p>Loading...</p>)}
 
                 {searchResult && (
                     <div id="characters" className="py-3">
 
                         <Row xs={1} md={2} lg={3} className="g-4">
                             {searchResult.data.map(data => (
-                                <Col key={data.id}>
+                                <Col key={data.id} className="d-flex align-items-stretch">
                                     <Card className="glass">
-                                        {/* <Card.Img variant="top" src="https://unsplash.it/640/425?blur" /> */}
-
-                                        <Card.Body>
+                                        <Card.Body className="d-flex row px-4">
                                             <Card.Title>{data.name}</Card.Title>
                                             <hr />
                                             <Card.Text>
-                                                Species:  {data.species_count}
+                                                <p><strong> Species: </strong> {data.species_count} </p>
                                             </Card.Text>
                                             <Card.Text>
-                                                Birth year: {data.birth_year}
+                                                <p><strong>Birth year: </strong>{data.birth_year} </p>
                                             </Card.Text>
                                             <Card.Text>
-                                                Starring in:  {data.films_count} movies
+                                                <p><strong>  Starring in: </strong> {data.films_count}  movies</p>
                                             </Card.Text>
                                             <Button
                                                 variant="dark"
@@ -151,16 +149,15 @@ const CharactersPage = () => {
                         <Pagination
                             page={searchResult.current_page}
                             totalPages={searchResult.last_page}
-                            hasPreviousPage={page > 1}
-                            hasNextPage={page < searchResult.last_page}
-                            onPreviousPage={() => togglePage(page - 1)}
-                            onNextPage={() => togglePage(page + 1)}
+                            hasPreviousPage={searchResult.prev_page_url}
+                            hasNextPage={searchResult.next_page_url}
+                            onPreviousPage={() => newSearch(searchInput, String(page - 1))}
+                            onNextPage={() => newSearch(searchInput, String(page + 1))}
                         />
-
                     </div>
                 )}
             </Container>
-        </div>
+        </div >
     )
 }
 
