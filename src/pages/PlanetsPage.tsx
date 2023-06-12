@@ -9,11 +9,13 @@ import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import { SW_PlanetsSearchResponse } from '../types/index'
 import Search from '../components/Search'
+import Loading from '../components/Loading'
+import ErrorComponent from '../components/Error'
 
 const PlanetsPage = () => {
     const [error, setError] = useState<string | null>(null)
+    const [showErr, setShowErr] = useState(false)
     const [loading, setLoading] = useState(false)
-    // const [page, setPage] = useState(1)
     const [searchInput, setSearchInput] = useState('')
     const [searchResult, setSearchResult] = useState<SW_PlanetsSearchResponse | null>(null)
     const [searchParams, setSearchParams] = useSearchParams()
@@ -21,39 +23,43 @@ const PlanetsPage = () => {
     const query = searchParams.get('query')
     const page = Number(searchParams.get('page') ?? 1)
 
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-
+    const newSearch = (searchInput: string, page: string) => {
+        const newSearchParams = new URLSearchParams(searchParams.toString())
+        newSearchParams.set('query', searchInput)
+        newSearchParams.set('page', String(page))
+        setSearchParams(newSearchParams)
+    }
 
     const getPlanets = async (searchPage: number) => {
         setLoading(true)
+        setError(null)
+        setShowErr(false)
 
         try {
             const data = await SW_API.getPlanets(searchPage)
             setSearchResult(data)
-            console.log(data)
 
         } catch (err: any) {
             setError(err.message)
-            console.log(err.message)
+            setShowErr(true)
         }
         setLoading(false)
     }
 
     const searchPlanets = async (searchQuery: string, searchPage: number) => {
         setError(null)
-        setLoading(true)
+        setShowErr(false)
+        setLoading(false)
         setSearchResult(null)
 
         try {
             const data = await SW_API.searchPlanets(searchQuery, searchPage)
-            console.log(data)
-
             setSearchResult(data)
             setLoading(false)
         }
         catch (err: any) {
             setError(err.message)
-            console.log(err.message)
+            setShowErr(true)
         }
         setLoading(false)
     }
@@ -65,13 +71,8 @@ const PlanetsPage = () => {
             return
         }
 
-        // setPage(1)
-        newSearchParams.set('query', searchInput)
-        newSearchParams.set('page', String(page))
-
-        setSearchParams(newSearchParams)
         searchPlanets(searchInput, 1)
-        // setSearchParams({ query: searchInput })
+        newSearch(searchInput, String(1))
     }
 
     const handleResetForm = () => {
@@ -80,18 +81,12 @@ const PlanetsPage = () => {
         setSearchParams('')
     }
 
-    const togglePage = (page: number) => {
-        newSearchParams.set('query', searchInput)
-        newSearchParams.set('page', String(page))
-        setSearchParams(newSearchParams)
-    }
-
     useEffect(() => {
         if (!query) {
             setLoading(false)
             setError(null)
             getPlanets(page)
-
+            setSearchInput('')
             return
         }
         searchPlanets(query, page)
@@ -102,6 +97,10 @@ const PlanetsPage = () => {
 
     return (
         <div className="planets">
+
+            <Loading show={loading}></Loading>
+            <ErrorComponent show={showErr}>Error: {error}</ErrorComponent>
+
             <Container className="py-3">
                 <div className="bg-card py-4 px-4">
                     <h1>Planets</h1>
@@ -112,35 +111,30 @@ const PlanetsPage = () => {
                         setSearchInput={setSearchInput}
                         handleResetForm={handleResetForm}
                     />
-                </div>
+                    {searchResult && (query ? <p>Showing {searchResult.total} search results for "{query}"</p> : <p>{searchResult.total} planets</p>)}
 
-                {error && <div>{error}</div>}
-                {loading && (<p>Loading...</p>)}
+                </div>
 
                 {searchResult && (
                     <div id="characters" className="py-3">
-                        {query && <p>Showing {searchResult.total} search results for "{query}"</p>}
-
                         <Row xs={1} md={2} lg={3} className="g-4">
                             {searchResult.data.map(data => (
-                                <Col key={data.id}>
+                                <Col key={data.id} className="d-flex align-items-stretch">
                                     <Card className="glass">
-                                        {/* <Card.Img variant="top" src="https://unsplash.it/640/425?blur" /> */}
-
-                                        <Card.Body>
+                                        <Card.Body className=" d-flex row px-4">
                                             <Card.Title>{data.name}</Card.Title>
                                             <hr />
                                             <Card.Text>
-                                                Climate:  {data.climate}
+                                                <strong>Climate:</strong> {data.climate}
                                             </Card.Text>
                                             <Card.Text>
-                                                Population: {data.population}
+                                                <strong>Population:</strong>{data.population}
                                             </Card.Text>
                                             <Card.Text>
-                                                Starring in:  {data.films_count} movies
+                                                <strong>Starring in:</strong> {data.films_count} movies
                                             </Card.Text>
                                             <Card.Text>
-                                                Resdents:  {data.residents_count}
+                                                <strong>Residents:</strong> {data.residents_count}
                                             </Card.Text>
                                             <Button
                                                 variant="dark"
@@ -155,10 +149,10 @@ const PlanetsPage = () => {
                         <Pagination
                             page={searchResult.current_page}
                             totalPages={searchResult.last_page}
-                            hasPreviousPage={page > 1}
-                            hasNextPage={page < searchResult.last_page}
-                            onPreviousPage={() => togglePage(page - 1)}
-                            onNextPage={() => togglePage(page + 1)}
+                            hasPreviousPage={searchResult.prev_page_url}
+                            hasNextPage={searchResult.next_page_url}
+                            onPreviousPage={() => newSearch(searchInput, String(page - 1))}
+                            onNextPage={() => newSearch(searchInput, String(page + 1))}
                         />
 
                     </div>

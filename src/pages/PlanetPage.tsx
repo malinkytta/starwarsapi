@@ -7,26 +7,28 @@ import Container from 'react-bootstrap/Container'
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Card from "react-bootstrap/Card"
-
+import Button from 'react-bootstrap/Button'
+import Loading from "../components/Loading"
 
 
 const PlanetPage = () => {
     const [searchResult, setSearchResult] = useState<SW_SinglePlanetData | null>(null)
     const [error, setError] = useState<string | null>(null)
+    const [loading, setLoading] = useState(false)
     const { id } = useParams()
     const planetId = Number(id)
 
     const getPlanet = async (id: number) => {
+        setLoading(true)
 
         try {
             const data = await SW_API.getPlanet(id)
-            console.log(data)
             setSearchResult(data)
 
         } catch (err: any) {
-            console.log(err)
             setError(err.message)
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -46,81 +48,67 @@ const PlanetPage = () => {
 
     return (
         <div className="planets">
+            <Loading show={loading}></Loading>
+
             <Container className="py-3">
+                <Link to="/planets">
+                    <Button className="mb-3" variant='dark'>&laquo; All planets</Button>
+                </Link>
+
                 {searchResult && (
                     <div className="search-result" >
                         <ListGroup className="mb-3">
                             <ListGroup.Item
-                                className="glass"
+                                className="glass px-4 py-4"
                                 key={searchResult.id}
                             >
                                 <h2>{searchResult.name}</h2>
                                 <hr />
+                                <p><strong>Population: </strong>{searchResult.population}</p>
+                                <p><strong>Terrain: </strong>{searchResult.terrain}</p>
 
-                                <p>
-                                    Population: {searchResult.population}
-                                </p>
-                                <p>
-                                    Terrain: {searchResult.terrain}
-                                </p>
-
-                                <ListGroup>
-                                    <h3>Residents</h3>
-                                    {searchResult.residents.length < 1 && (
-                                        <>
-                                            <Row className="mb-4">
-                                                <Col>
-                                                    {/* <Card className="none"> */}
-                                                    <Card.Body>
-                                                        <Card.Text> No residents</Card.Text>
-                                                    </Card.Body>
-                                                    {/* </Card> */}
-                                                </Col>
-                                            </Row>
-                                        </>
-                                    )}
-                                    <Row xs={1} md={2} lg={4} className="g-4">
-                                        {searchResult.residents.map(data => (
-                                            <Col key={data.id}>
-                                                <Card as={Link} to={`/characters/${data.id}`} className="card-hover">
-                                                    <Card.Body>
-                                                        <Card.Text>{data.name}</Card.Text>
-                                                    </Card.Body>
-                                                </Card>
+                                <h3>Residents</h3>
+                                {searchResult.residents.length < 1 && (
+                                    <>
+                                        <Row className="mb-4">
+                                            <Col>
+                                                <Card.Body>
+                                                    <Card.Text>No residents</Card.Text>
+                                                </Card.Body>
                                             </Col>
-                                        ))}
-                                    </Row>
+                                        </Row>
+                                    </>
+                                )}
 
-                                    {/* {searchResult.residents.map(data =>
-                                        <ListGroup.Item
-                                            action
-                                            href={`/characters/${data.id}`}
-                                            key={data.id}
-                                        >
-                                            <p>{data.name}</p>
-                                        </ListGroup.Item>)} */}
-                                </ListGroup>
+                                <Row xs={1} md={2} lg={4} className="g-4">
+                                    {searchResult.residents.map(data => (
+                                        <Col key={data.id}>
+                                            <Card as={Link} to={`/characters/${data.id}`} className="card-hover">
+                                                <Card.Body>
+                                                    <Card.Text>{data.name}</Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
 
-                                <ListGroup>
-                                    <h3 className="mt-3">Movies</h3>
-                                    <Row xs={1} md={2} lg={4} className="g-4 ">
-                                        {searchResult.films.map(data => (
-                                            <Col key={data.id}>
-                                                <Card as={Link} to={`/movies/${data.id}`} className="card-hover">
-                                                    <Card.Body>
-                                                        <Card.Text>{data.title}</Card.Text>
-                                                    </Card.Body>
-                                                </Card>
-                                            </Col>
-                                        ))}
-                                    </Row>
-                                </ListGroup>
+                                <h3 className="mt-3">Movies</h3>
+                                <Row xs={1} md={2} lg={4} className="g-4 ">
+                                    {searchResult.films.map(data => (
+                                        <Col key={data.id}>
+                                            <Card as={Link} to={`/movies/${data.id}`} className="card-hover">
+                                                <Card.Body>
+                                                    <Card.Text>{data.title}</Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
 
                             </ListGroup.Item>
                         </ListGroup>
                     </div>
-                )
-                }
+                )}
             </Container >
         </div >
     )
