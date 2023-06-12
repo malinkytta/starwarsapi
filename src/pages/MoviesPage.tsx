@@ -1,29 +1,36 @@
 import { useEffect, useState } from 'react'
 import * as SW_API from '../services/StarWarsAPI'
 import { SW_MovieSearchResponse } from '../types'
-import Button from 'react-bootstrap/Button'
 import { useSearchParams } from 'react-router-dom'
 import Pagination from '../components/Pagination'
-import Card from 'react-bootstrap/Card'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import Search from '../components/Search'
 import Loading from '../components/Loading'
+import OverviewCard from '../components/OverviewCard'
+import ErrorComponent from '../components/Error'
 
 const MoviesPage = () => {
     const [error, setError] = useState<string | null>(null)
+    const [showErr, setShowErr] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [page, setPage] = useState(1)
     const [searchInput, setSearchInput] = useState('')
     const [searchResult, setSearchResult] = useState<SW_MovieSearchResponse | null>(null)
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const query = searchParams.get('query')
-    // const page = Number(searchParams.get('page') ?? 1)
+    const query = searchParams.get('query') ?? ''
+    const page = Number(searchParams.get('page') ?? 1)
+
+    const newSearch = (searchInput: string, page: string) => {
+        const newSearchParams = new URLSearchParams(searchParams.toString())
+        newSearchParams.set('query', searchInput)
+        newSearchParams.set('page', String(page))
+        setSearchParams(newSearchParams)
+    }
 
     const getMovies = async (searchPage: number) => {
         setLoading(true)
+        setShowErr(false)
+        setError(null)
 
         try {
             const data = await SW_API.getMovies(searchPage)
@@ -31,13 +38,14 @@ const MoviesPage = () => {
 
         } catch (err: any) {
             setError(err.message)
-            console.log(err.message)
+            setShowErr(true)
         }
         setLoading(false)
     }
 
     const searchMovies = async (searchQuery: string, searchPage: number) => {
         setError(null)
+        setShowErr(false)
         setLoading(true)
         setSearchResult(null)
 
@@ -49,7 +57,7 @@ const MoviesPage = () => {
         }
         catch (err: any) {
             setError(err.message)
-            console.log(err.message)
+            setShowErr(true)
         }
         setLoading(false)
     }
@@ -60,8 +68,6 @@ const MoviesPage = () => {
         if (!searchInput.trim().length) {
             return
         }
-
-        setPage(1)
 
         searchMovies(searchInput, 1)
         setSearchParams({ query: searchInput })
@@ -78,17 +84,21 @@ const MoviesPage = () => {
             setLoading(false)
             setError(null)
             getMovies(page)
+            setSearchInput('')
             return
         }
         searchMovies(query, page)
 
     }, [query, page])
 
-
+    window.scrollTo(0, 0)
 
     return (
 
         <div className="movies">
+
+            <Loading show={loading}></Loading>
+            <ErrorComponent show={showErr} onConfirm={() => { setShowErr(false) }}>Error: {error}</ErrorComponent>
 
             <Container className="py-3">
                 <div className="bg-card py-4 px-4">
@@ -100,80 +110,27 @@ const MoviesPage = () => {
                         setSearchInput={setSearchInput}
                         handleResetForm={handleResetForm}
                     />
-                    {query && searchResult && <p>Showing {searchResult.total} search results for "{query}"</p>}
+                    {searchResult && (query ? <p>Showing {searchResult.total} search results for "{query}"</p> : <p> {searchResult.total} movies</p>)}
                 </div>
-
-                {error && <div>{error}</div>}
-
-                {/* {loading && (<img src="src/assets/images/stormtrooper-star-wars.gif" alt="" />
-                )} */}
-
-                {loading && <Loading show={loading}></Loading>}
-
-
 
                 {searchResult && (
                     <div id="movies" className="py-3">
 
-                        <Row xs={1} md={2} lg={3} className="g-4">
-                            {searchResult.data.map(data => (
-                                <Col key={data.id}>
-                                    <Card className="glass">
-                                        {/* <Card.Img variant="top" src="https://unsplash.it/640/425?blur" /> */}
-
-                                        <Card.Body>
-                                            <Card.Title>{data.title}</Card.Title>
-                                            <hr />
-                                            <Card.Text>
-                                                Episode: {data.episode_id}
-                                            </Card.Text>
-                                            <Card.Text>
-                                                Released: {data.release_date}
-                                            </Card.Text>
-                                            <Card.Text>
-                                                {data.characters_count} characters
-                                            </Card.Text>
-                                            <Button
-                                                variant="dark"
-                                                href={`/movies/${data.id}`}
-                                            >Read more</Button>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Row>
-
-                        {/* <div id="movies" className='gy-4'>
-                        {query && <p>Showing {searchResult.data.length} search results for "{query}"</p>}
-                        <ListGroup className='mb-3'>
-                            {searchResult.data.map(data =>
-                                <ListGroup.Item
-                                    className="col-6"
-                                    action
-                                    href={`/movies/${data.id}`}
-                                    key={data.id}
-                                >
-                                    <h2>{data.title}</h2>
-                                    <p className='mb-0'>Episode: {data.episode_id}</p>
-                                    <p className='mb-0'>Released: {data.release_date}</p>
-                                    <p className='mb-0'>{data.characters_count} characters</p>
-                                    <Button>Read more</Button>
-
-                                </ListGroup.Item>
-                            )}
-                        </ListGroup> */}
+                        <OverviewCard
+                            pageType={'movies'}
+                            searchResult={searchResult}
+                        />
 
                         <Pagination
                             page={searchResult.current_page}
                             totalPages={searchResult.last_page}
-                            hasPreviousPage={page > 1}
-                            hasNextPage={page < searchResult.last_page}
-                            onPreviousPage={() => { setPage(prevValue => prevValue - 1) }}
-                            onNextPage={() => { setPage(prevValue => prevValue + 1) }}
+                            hasPreviousPage={searchResult.prev_page_url}
+                            hasNextPage={searchResult.next_page_url}
+                            onPreviousPage={() => newSearch(searchInput, String(page - 1))}
+                            onNextPage={() => newSearch(searchInput, String(page + 1))}
                         />
                     </div>
-                )
-                }
+                )}
             </Container>
         </div >
     )

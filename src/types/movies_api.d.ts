@@ -1,4 +1,4 @@
-import { SW_Characters } from './characters_api'
+// import { SW_Characters } from './characters_api'
 
 export type SW_MovieSearchResponse = {
     current_page: number
@@ -7,11 +7,15 @@ export type SW_MovieSearchResponse = {
     from: number
     last_page: number
     last_page_url: string
-    links: []
+    links: [{
+        url: string
+        label: string
+        active: boolean
+    }]
     next_page_url: string | null
     path: string
     per_page: number
-    prev_page_url: number | null
+    prev_page_url: string | null
     to: number
     total: number
 }
@@ -24,8 +28,6 @@ export type SW_MoviesData = {
     director: string
     producer: string
     release_date: string
-    created: string
-    edited: string
     characters_count: number
     planets_count: number
     starships_count: number
@@ -41,16 +43,14 @@ export type SW_SingleMovieData = {
     director: string
     producer: string
     release_date: string
-    created: string
-    edited: string
-    characters_count: number
-    planets_count: number
-    starships_count: number
-    vehicles_count: number
-    species_count: number
     characters: SW_Character[]
-    planets: SW_Planets[]
-    starships: SW_Starships[]
-    vehicles: SW_Vehicles[]
-    species: SW_Species[]
+    planets: SW_Planet[]
+    starships: SW_Starship[]
+    vehicles: SW_Vehicle[]
+    species: SW_Specie[]
+}
+
+export type SW_Movie = {
+    id: number
+    title: string
 }
