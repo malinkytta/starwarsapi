@@ -43,15 +43,16 @@ const MoviePage = () => {
 
     return (
         <div className="movies">
-            <Loading show={loading}></Loading>
-            <ErrorComponent show={showErr} >{error}</ErrorComponent>
-
             <Container className="py-3">
-                <Link to="/movies">
-                    <Button className="mb-3" variant='dark'>&laquo; All movies</Button>
-                </Link>
+
+                <Loading show={loading}></Loading>
+                <ErrorComponent show={showErr} >{error}</ErrorComponent>
+
                 {searchResult && (
                     <div className="search-result" >
+                        <Link to="/movies">
+                            <Button className="mb-3" variant='dark'>&laquo; All movies</Button>
+                        </Link>
                         <CardComponent searchResult={searchResult} />
                     </div>
                 )}

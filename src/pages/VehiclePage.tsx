@@ -9,17 +9,21 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
 import Loading from "../components/Loading"
+import ErrorComponent from "../components/Error"
 
 
 const VehiclePage = () => {
     const [searchResult, setSearchResult] = useState<SW_SingleVehicleData | null>(null)
     const [error, setError] = useState<string | null>(null)
+    const [showErr, setShowErr] = useState(false)
     const [loading, setLoading] = useState(false)
     const { id } = useParams()
     const vehicleId = Number(id)
 
     const getVehicle = async (id: number) => {
         setLoading(true)
+        setError(null)
+        setShowErr(false)
 
         try {
             const data = await SW_API.getVehicle(id)
@@ -27,6 +31,7 @@ const VehiclePage = () => {
 
         } catch (err: any) {
             setError(err.message)
+            setShowErr(true)
         }
         setLoading(false)
     }
@@ -39,24 +44,19 @@ const VehiclePage = () => {
         getVehicle(vehicleId)
     }, [vehicleId])
 
-
-    if (error) {
-        return (
-            <p>{error}</p>
-        )
-    }
-
     return (
         <div className="vehicles">
             <Container className="py-3">
-                <Loading show={loading}></Loading>
 
-                <Link to="/vehicles">
-                    <Button className="mb-3" variant='dark'>&laquo; All vehicles</Button>
-                </Link>
+                <Loading show={loading}></Loading>
+                <ErrorComponent show={showErr} >{error}</ErrorComponent>
 
                 {searchResult && (
                     <div className="search-result" >
+
+                        <Link to="/vehicles">
+                            <Button className="mb-3" variant='dark'>&laquo; All vehicles</Button>
+                        </Link>
                         <ListGroup className="mb-3">
                             <ListGroup.Item
                                 className="glass"

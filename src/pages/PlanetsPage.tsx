@@ -99,7 +99,7 @@ const PlanetsPage = () => {
         <div className="planets">
 
             <Loading show={loading}></Loading>
-            <ErrorComponent show={showErr}>Error: {error}</ErrorComponent>
+            <ErrorComponent show={showErr}>{error}</ErrorComponent>
 
             <Container className="py-3">
                 <div className="bg-card py-4 px-4">

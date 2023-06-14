@@ -9,17 +9,21 @@ import Col from "react-bootstrap/Col"
 import Card from "react-bootstrap/Card"
 import Button from 'react-bootstrap/Button'
 import Loading from "../components/Loading"
+import ErrorComponent from "../components/Error"
 
 
 const PlanetPage = () => {
     const [searchResult, setSearchResult] = useState<SW_SinglePlanetData | null>(null)
     const [error, setError] = useState<string | null>(null)
+    const [showErr, setShowErr] = useState(false)
     const [loading, setLoading] = useState(false)
     const { id } = useParams()
     const planetId = Number(id)
 
     const getPlanet = async (id: number) => {
         setLoading(true)
+        setError(null)
+        setShowErr(false)
 
         try {
             const data = await SW_API.getPlanet(id)
@@ -27,6 +31,7 @@ const PlanetPage = () => {
 
         } catch (err: any) {
             setError(err.message)
+            setShowErr(true)
         }
         setLoading(false)
     }
@@ -40,23 +45,18 @@ const PlanetPage = () => {
     }, [planetId])
 
 
-    if (error) {
-        return (
-            <p>{error}</p>
-        )
-    }
-
     return (
         <div className="planets">
-            <Loading show={loading}></Loading>
-
             <Container className="py-3">
-                <Link to="/planets">
-                    <Button className="mb-3" variant='dark'>&laquo; All planets</Button>
-                </Link>
+
+                <Loading show={loading}></Loading>
+                <ErrorComponent show={showErr} >{error}</ErrorComponent>
 
                 {searchResult && (
-                    <div className="search-result" >
+                    <div className="search-result">
+                        <Link to="/planets">
+                            <Button className="mb-3" variant='dark'>&laquo; All planets</Button>
+                        </Link>
                         <ListGroup className="mb-3">
                             <ListGroup.Item
                                 className="glass px-4 py-4"

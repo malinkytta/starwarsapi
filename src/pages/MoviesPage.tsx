@@ -98,7 +98,7 @@ const MoviesPage = () => {
         <div className="movies">
 
             <Loading show={loading}></Loading>
-            <ErrorComponent show={showErr} onConfirm={() => { setShowErr(false) }}>Error: {error}</ErrorComponent>
+            <ErrorComponent show={showErr}>{error}</ErrorComponent>
 
             <Container className="py-3">
                 <div className="bg-card py-4 px-4">
@@ -110,16 +110,13 @@ const MoviesPage = () => {
                         setSearchInput={setSearchInput}
                         handleResetForm={handleResetForm}
                     />
+
                     {searchResult && (query ? <p>Showing {searchResult.total} search results for "{query}"</p> : <p> {searchResult.total} movies</p>)}
                 </div>
 
                 {searchResult && (
                     <div id="movies" className="py-3">
-
-                        <OverviewCard
-                            pageType={'movies'}
-                            searchResult={searchResult}
-                        />
+                        <OverviewCard searchResult={searchResult} />
 
                         <Pagination
                             page={searchResult.current_page}

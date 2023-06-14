@@ -9,24 +9,31 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Loading from "../components/Loading"
+import ErrorComponent from "../components/Error"
 
 
 const SpeciePage = () => {
     const [searchResult, setSearchResult] = useState<SW_SingleSpeciesData | null>(null)
     const [error, setError] = useState<string | null>(null)
+    const [showErr, setShowErr] = useState(false)
     const [loading, setLoading] = useState(false)
     const { id } = useParams()
     const specieId = Number(id)
 
     const getSpecie = async (id: number) => {
         setLoading(true)
+        setError(null)
+        setShowErr(false)
+
         try {
             const data = await SW_API.getSpecie(id)
             setSearchResult(data)
 
         } catch (err: any) {
             setError(err.message)
+            setShowErr(true)
         }
+
         setLoading(false)
     }
 
@@ -39,22 +46,18 @@ const SpeciePage = () => {
     }, [specieId])
 
 
-    if (error) {
-        return (
-            <p>{error}</p>
-        )
-    }
-
     return (
         <div className="species">
-            <Loading show={loading}></Loading>
-
             <Container className="py-3">
-                <Link to="/species">
-                    <Button className="mb-3" variant='dark'>&laquo; All species</Button>
-                </Link>
+
+                <Loading show={loading}></Loading>
+                <ErrorComponent show={showErr} >{error}</ErrorComponent>
+
                 {searchResult && (
                     <div className="search-result" >
+                        <Link to="/species">
+                            <Button className="mb-3" variant='dark'>&laquo; All species</Button>
+                        </Link>
                         <ListGroup className="mb-3">
                             <ListGroup.Item
                                 className="glass px-4 py-4"

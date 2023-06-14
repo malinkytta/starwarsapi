@@ -9,17 +9,21 @@ import Col from "react-bootstrap/Col"
 import Card from "react-bootstrap/Card"
 import Button from "react-bootstrap/Button"
 import Loading from "../components/Loading"
+import ErrorComponent from "../components/Error"
 
 
 const StarShip = () => {
     const [searchResult, setSearchResult] = useState<SW_SingleStarshipsData | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
+    const [showErr, setShowErr] = useState(false)
     const { id } = useParams()
     const starshipId = Number(id)
 
     const getStarship = async (id: number) => {
         setLoading(true)
+        setError(null)
+        setShowErr(false)
 
         try {
             const data = await SW_API.getStarship(id)
@@ -27,6 +31,7 @@ const StarShip = () => {
 
         } catch (err: any) {
             setError(err.message)
+            setShowErr(true)
         }
         setLoading(false)
     }
@@ -39,24 +44,18 @@ const StarShip = () => {
         getStarship(starshipId)
     }, [starshipId])
 
-
-    if (error) {
-        return (
-            <p>{error}</p>
-        )
-    }
-
     return (
         <div className="starships">
-            <Loading show={loading}></Loading>
-
             <Container className="py-3">
-                <Link to="/starships">
-                    <Button className="mb-3" variant='dark'>&laquo; All starships</Button>
-                </Link>
+
+                <Loading show={loading}></Loading>
+                <ErrorComponent show={showErr} >{error}</ErrorComponent>
 
                 {searchResult && (
-                    <div className="search-result" >
+                    <div className="search-result">
+                        <Link to="/starships">
+                            <Button className="mb-3" variant='dark'>&laquo; All starships</Button>
+                        </Link>
                         <ListGroup className="mb-3">
                             <ListGroup.Item
                                 className="glass px-4 py-4"

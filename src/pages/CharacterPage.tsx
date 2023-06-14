@@ -43,26 +43,20 @@ const CharacterPage = () => {
         getCharacter(characterId)
     }, [characterId])
 
-
-    if (error) {
-        return (
-            <ErrorComponent show={showErr}>Error: {error}</ErrorComponent>
-
-        )
-    }
-
     return (
         <div className="characters">
-
-            <Loading show={loading}></Loading>
-
             <Container className="py-3">
-                <Link to="/characters">
-                    <Button className="mb-3" variant='dark'>&laquo; All characters</Button>
-                </Link>
+
+                <Loading show={loading}></Loading>
+                <ErrorComponent show={showErr}>{error}</ErrorComponent>
+
 
                 {searchResult && (
                     <div className="search-result">
+                        <Link to="/characters">
+                            <Button className="mb-3" variant='dark'>&laquo; All characters</Button>
+                        </Link>
+
                         <ListGroup className="mb-3 my-3">
                             <ListGroup.Item
                                 className="glass px-4 py-4"
