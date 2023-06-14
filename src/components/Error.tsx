@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 interface IProps {
     children: React.ReactNode
     show: boolean
-    // onConfirm: () => void
 }
 
 const ErrorComponent: React.FC<IProps> = ({ children, show }) => {
@@ -14,19 +13,23 @@ const ErrorComponent: React.FC<IProps> = ({ children, show }) => {
 
     return (
         <Modal
+            className="error"
             show={show}
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
             <Modal.Body>
-                <Modal.Title>  It seems we've entered a galaxy far, far away from the requested page.
+                <Modal.Title>
+                    {children}
                 </Modal.Title>
-                {children}
+                <img src="/src/assets/images/starwarsday.gif" alt="" />
+                <p className="pt-3"> It seems we've entered a galaxy far, far away from the requested page.</p>
             </Modal.Body>
+
             <Modal.Footer>
                 <Button
                     onClick={() => navigate(-1)}
-                    variant="secondary"
+                    variant="dark"
                 >
                     Return to safety, young Padawan.
                 </Button>
@@ -35,4 +38,5 @@ const ErrorComponent: React.FC<IProps> = ({ children, show }) => {
     );
 }
 export default ErrorComponent
+
 
