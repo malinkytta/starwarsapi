@@ -18,8 +18,16 @@ a {
     text-decoration: none;
 }
 
+.navbar-toggler {
+    border: none;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
 #App {
-    width: 100vw;
+    // width: 100vw;
     background: rgb(36, 27, 19, 0.7);
     background-size: cover;
 }
@@ -51,10 +59,6 @@ a {
     }
 }
 
-.test {
-    place-items: center;
-}
-
 .typed {
     overflow: hidden;
     white-space: nowrap;
@@ -76,8 +80,6 @@ a {
     }
 }
 
-
-
 .modal-backdrop {
     background: black;
     opacity: 0.5;
@@ -90,7 +92,10 @@ a {
 }
 
 .not-found {
-    background: url('/src/assets/images/jake-weirick-Q_RBVFFXR_g-unsplash.jpg');
+    background: linear-gradient(90deg,
+            rgba(0, 0, 0, 0.5) 0%,
+            rgba(0, 0, 0, 0.5) 100%),
+        url('/src/assets/images/jake-weirick-Q_RBVFFXR_g-unsplash.jpg');
     background-size: cover;
     height: 100vh;
     color: #fff;
@@ -120,7 +125,6 @@ a {
 .card-hover {
     text-align: center;
     background: rgba(255, 255, 255, 0.15);
-    // border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -134,6 +138,7 @@ a {
 .movies {
     background: url('/src/assets/images/background.jpg');
     background-size: cover;
+    background-attachment: fixed;
     min-height: 100vh;
 }
 
@@ -147,6 +152,7 @@ a {
 .planets {
     background: url('/src/assets/images/albina-andreeva-zybYFsqSbUI-unsplash.jpg');
     background-size: cover;
+    background-attachment: fixed;
     min-height: 100vh;
 }
 
@@ -154,6 +160,7 @@ a {
     background: url('/src/assets/images/rod-long-OSx6FqBtK7I-unsplash.jpg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     min-height: 100vh;
 }
 
@@ -161,12 +168,14 @@ a {
     background: url('/src/assets/images/steady-hand-co-R9EwSkibKkE-unsplash.jpg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     min-height: 100vh;
 }
 
 .vehicles {
     background: url('/src/assets/images/459321.jpg');
     background-size: cover;
+    background-attachment: fixed;
     min-height: 100vh;
 }
 
@@ -182,7 +191,18 @@ a {
         // background: rgba(0, 0, 0, 0.4);
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(10.9px);
-        // -webkit-backdrop-filter: blur(10.9px);
         border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+}
+
+.error {
+    text-align: center;
+
+    img {
+        width: 100%;
+    }
+
+    .modal-footer {
+        justify-content: center;
     }
 }
