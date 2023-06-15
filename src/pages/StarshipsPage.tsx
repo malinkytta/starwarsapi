@@ -95,7 +95,7 @@ const StarshipsPage = () => {
 
     }, [query, page])
 
-    window.scrollTo(0, 0)
+    setTimeout(() => { window.scrollTo(0, 0) }, 100)
 
     return (
         <div className="starships">
@@ -141,7 +141,7 @@ const StarshipsPage = () => {
                                                 <strong>Movies:</strong> {data.films_count}
                                             </Card.Text>
                                             <Button
-                                                variant="transparent"
+                                                variant="dark"
                                                 className="my-auto"
                                                 href={`/starships/${data.id}`}
                                             >Read more</Button>
@@ -159,7 +159,6 @@ const StarshipsPage = () => {
                             onPreviousPage={() => newSearch(searchInput, String(page - 1))}
                             onNextPage={() => newSearch(searchInput, String(page + 1))}
                         />
-
                     </div>
                 )}
             </Container >

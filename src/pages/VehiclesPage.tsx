@@ -95,7 +95,7 @@ const VehiclesPage = () => {
 
     }, [query, page])
 
-    window.scrollTo(0, 0)
+    setTimeout(() => { window.scrollTo(0, 0) }, 100)
 
     return (
         <div className="vehicles">
