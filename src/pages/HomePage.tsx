@@ -1,17 +1,29 @@
-import Container from 'react-bootstrap/Container'
+import { useEffect, useState } from 'react'
 
 const HomePage = () => {
+    const [showText, setShowText] = useState(true)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setShowText(false)
+        }, 5000)
+
+        setShowText(true)
+    }, [])
 
     return (
         <div className="homepage">
-            <Container className='py-3'>
-                <div className="title">
-                    <h1>Welcome to Starwars Encyclopedia</h1>
-                </div>
-            </Container>
+            {showText && (
+                <>
+                    <div className="title align-items-center">
+                        <div className="typed mx-auto">
+                            Welcome to the Star Wars Encyclopedia!
+                        </div>
+                    </div>
+                </>
+            )}
         </div >
-
     )
 }
 
-export default HomePage
+export default HomePage;
