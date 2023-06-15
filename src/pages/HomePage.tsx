@@ -16,7 +16,7 @@ const HomePage = () => {
             {showText && (
                 <>
                     <div className="title align-items-center">
-                        <div className="typed mx-auto">
+                        <div className="typed">
                             Welcome to the Star Wars Encyclopedia!
                         </div>
                     </div>
