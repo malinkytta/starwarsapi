@@ -36,7 +36,6 @@ a {
 }
 
 #App {
-    // width: 100%;
     background: rgb(36, 27, 19, 0.7);
     background-size: cover;
 }
@@ -49,19 +48,22 @@ a {
     color: #ffe4b3;
 }
 
+.navbar-brand {
+    margin-right: 0;
+}
+
 .homepage {
     height: 100vh;
     background: url('/src/assets/images/scott-gummerson-WwAUvVTb2Cw-unsplash.jpg');
     background-size: cover;
     background-position: center;
-    // color: #fff;
+}
 
-    .title {
-        background: rgb(0, 0, 0, 0.8);
-        height: 100vh;
-        place-items: center;
-        display: grid;
-    }
+.title {
+    background: rgb(0, 0, 0, 0.8);
+    height: 100vh;
+    place-items: center;
+    display: grid;
 }
 
 .typed {
@@ -113,7 +115,6 @@ a {
     h1 {
         font-size: 12rem;
         margin-bottom: 0;
-
     }
 }
 
@@ -190,26 +191,16 @@ a {
 
 .glass {
     background: rgba(255, 255, 255, 0.2);
-    // border-radius: 16px;
     border-radius: 10px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10.9px);
     -webkit-backdrop-filter: blur(10.9px);
-    // border: 0;
     border: 1px solid rgba(255, 255, 255, 0.076);
 
     .btn-dark {
-        // width: 40%;
         inline-size: fit-content;
         margin-left: 10px;
     }
-
-    // .btn-transparent {
-    //     background: rgba(0, 0, 0, 0.6);
-    //     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    //     // backdrop-filter: blur(10.9px);
-    //     border: 1px solid rgba(255, 255, 255, 0.3);
-    // }
 }
 
 .error {

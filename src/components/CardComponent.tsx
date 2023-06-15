@@ -62,7 +62,7 @@ const CardComponent: React.FC<IProps> = ({ searchResult }) => {
                     <Row xs={1} md={2} lg={4} className="g-4">
                         {searchResult.starships.map(data => (
                             <Col key={data.id}>
-                                <Card as={Link} to={`/starhips/${data.id}`} className="card-hover">
+                                <Card as={Link} to={`/starships/${data.id}`} className="card-hover">
                                     <Card.Body>
                                         <Card.Text>{data.name}</Card.Text>
                                     </Card.Body>
