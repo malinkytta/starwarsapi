@@ -1,4 +1,5 @@
 import Modal from 'react-bootstrap/Modal'
+import Stormtrooper from '../assets/images/stormtrooper-star-wars.gif'
 
 interface IProps {
     show: boolean
@@ -13,7 +14,7 @@ const Loading: React.FC<IProps> = ({ show }) => {
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <img src="/src/assets/images/stormtrooper-star-wars.gif" />
+            <img src={Stormtrooper} />
         </Modal>
     );
 }

@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { NavLink, Link } from 'react-router-dom'
+import Logo from '../assets/images/star-wars-logo-1002.png'
 
 const Navigation = () => {
 
@@ -10,7 +11,7 @@ const Navigation = () => {
             <Container>
                 <Navbar.Brand as={Link} to="/" className="order-lg-1 order-md-1">
                     <img
-                        src="/src/assets/images/star-wars-logo-1002.png"
+                        src={Logo}
                         height="60"
                         className="d-inline-block align-top"
                         alt="StarWars Encyclopedia"
