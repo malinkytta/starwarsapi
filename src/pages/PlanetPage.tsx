@@ -66,6 +66,10 @@ const PlanetPage = () => {
                                 <hr />
                                 <p><strong>Population: </strong>{searchResult.population}</p>
                                 <p><strong>Terrain: </strong>{searchResult.terrain}</p>
+                                <p><strong>Climate: </strong>{searchResult.climate}</p>
+                                <p><strong>Rotation Period: </strong>{searchResult.rotation_period} hours</p>
+                                <p><strong>Surface Water </strong>{searchResult.surface_water}%</p>
+
 
                                 <h3>Residents</h3>
                                 {searchResult.residents.length < 1 && (

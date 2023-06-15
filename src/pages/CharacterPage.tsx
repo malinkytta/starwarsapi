@@ -64,8 +64,11 @@ const CharacterPage = () => {
                             >
                                 <h2>{searchResult.name}</h2>
                                 <p><strong>Birth year:</strong> {searchResult.birth_year}</p>
-                                <p><strong>Height:</strong> {searchResult.height}</p>
-
+                                <p><strong>Height:</strong> {searchResult.height} cm</p>
+                                <p><strong>Mass:</strong> {searchResult.mass} kg</p>
+                                <p><strong>Skincolor:</strong> {searchResult.skin_color}</p>
+                                <p><strong>Hair color:</strong> {searchResult.hair_color}</p>
+                                <p><strong>Eye color:</strong> {searchResult.eye_color}</p>
                                 <h3>Homeworld</h3>
                                 <Row xs={1} md={2} lg={4} className="g-4">
                                     <Col>

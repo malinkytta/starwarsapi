@@ -64,9 +64,14 @@ const VehiclePage = () => {
                             >
                                 <h2>{searchResult.name}</h2>
                                 <hr />
-                                <p><strong>Crew:</strong> {searchResult.crew}</p>
+                                <p><strong>Model:</strong> {searchResult.model}</p>
+                                <p><strong>Manufacturer:</strong> {searchResult.manufacturer}</p>
                                 <p><strong>Vehicle class:</strong> {searchResult.vehicle_class}</p>
-                                <p><strong>Model:</strong>  {searchResult.model}</p>
+                                <p><strong>Crew:</strong> {searchResult.crew}</p>
+                                <p><strong>Passengers:</strong> {searchResult.passengers}</p>
+                                <p><strong>Consumables:</strong> {searchResult.consumables}</p>
+                                <p><strong>Max atmosphering speed:</strong> {searchResult.max_atmosphering_speed} km/h</p>
+
 
                                 <h3>Pilots</h3>
                                 {searchResult.pilots.length < 1 && (

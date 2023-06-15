@@ -65,7 +65,11 @@ const StarShip = () => {
                                 <hr />
                                 <p><strong>Crew:</strong> {searchResult.crew}</p>
                                 <p><strong>Passenger:</strong> {searchResult.passengers}</p>
-                                <p> <strong>Model:</strong>  {searchResult.model}</p>
+                                <p><strong>Model:</strong> {searchResult.model}</p>
+                                <p><strong>Manufacturer:</strong> {searchResult.manufacturer}</p>
+                                <p><strong>Max atmosphering speed:</strong> {searchResult.max_atmosphering_speed} km/h</p>
+                                <p><strong>Consumables:</strong> {searchResult.consumables}</p>
+
 
                                 <h3>Pilots</h3>
                                 {searchResult.pilots.length < 1 && (

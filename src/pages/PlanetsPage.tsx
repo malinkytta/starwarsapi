@@ -125,10 +125,7 @@ const PlanetsPage = () => {
                                             <Card.Title>{data.name}</Card.Title>
                                             <hr />
                                             <Card.Text>
-                                                <strong>Climate:</strong> {data.climate}
-                                            </Card.Text>
-                                            <Card.Text>
-                                                <strong>Population:</strong>{data.population}
+                                                <strong>Population:</strong> {data.population}
                                             </Card.Text>
                                             <Card.Text>
                                                 <strong>Starring in:</strong> {data.films_count} movies

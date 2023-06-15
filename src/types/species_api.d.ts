@@ -35,6 +35,7 @@ export type SW_SingleSpeciesData = {
     name: string
     classification: string
     average_height: string
+    average_lifespan: string
     language: string
     people: SW_CharacterData[]
     homeworld: SW_Planet

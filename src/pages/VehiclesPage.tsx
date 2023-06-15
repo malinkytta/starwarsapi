@@ -130,9 +130,6 @@ const VehiclesPage = () => {
                                                 <strong>Model:</strong> {data.model}
                                             </Card.Text>
                                             <Card.Text>
-                                                <strong>Manufacturer:</strong> {data.manufacturer}
-                                            </Card.Text>
-                                            <Card.Text>
                                                 <strong>Pilots:</strong> {data.pilots_count}
                                             </Card.Text>
                                             <Card.Text>

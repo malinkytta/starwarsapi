@@ -36,6 +36,8 @@ export type SW_SinglePlanetData = {
     climate: string
     terrain: string
     population: string
+    rotation_period: string
+    surface_water: string
     residents: SW_CharacterData[]
     films: SW_MoviesData[]
 }

@@ -128,13 +128,13 @@ const CharactersPage = () => {
                                             <Card.Title>{data.name}</Card.Title>
                                             <hr />
                                             <Card.Text>
-                                                <p><strong> Species: </strong> {data.species_count} </p>
+                                                <strong>Birth year: </strong>{data.birth_year}
                                             </Card.Text>
                                             <Card.Text>
-                                                <p><strong>Birth year: </strong>{data.birth_year} </p>
+                                                <strong>Species: </strong> {data.species_count}
                                             </Card.Text>
                                             <Card.Text>
-                                                <p><strong>  Starring in: </strong> {data.films_count}  movies</p>
+                                                <strong>Starring in: </strong> {data.films_count}  movies
                                             </Card.Text>
                                             <Button
                                                 variant="dark"

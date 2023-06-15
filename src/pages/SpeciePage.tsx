@@ -67,6 +67,8 @@ const SpeciePage = () => {
                                 <hr />
                                 <p><strong>Classification:</strong> {searchResult.classification}</p>
                                 <p><strong>Language:</strong> {searchResult.language}</p>
+                                <p><strong>Average height:</strong> {searchResult.average_height} cm</p>
+                                <p><strong>Average lifespan:</strong> {searchResult.average_lifespan} years</p>
 
                                 <h3>Homeworld</h3>
                                 {searchResult.homeworld === null && (
