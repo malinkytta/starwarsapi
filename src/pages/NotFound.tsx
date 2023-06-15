@@ -17,6 +17,7 @@ const NotFound = () => {
                     Return to safety, young Padawan.
                 </Button>
 
+                <img src="src/assets/images/starwarsday.gif" alt="" />
             </Container>
         </div>
     )
