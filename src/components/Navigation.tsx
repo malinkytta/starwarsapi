@@ -36,7 +36,7 @@ const Navigation = () => {
 
                 <Navbar.Toggle className="order-lg-4 order-md-0" onClick={toggleNavbar} />
 
-                <Navbar.Collapse className="order-lg-0 order-md-0">
+                <Navbar.Collapse className="order-lg-0 order-md-0 justify-content-around">
                     <Nav className="ms-start">
                         <Nav.Link as={NavLink} to="/movies" onClick={closeNavbar} className={isActive('/movies')}>
                             Movies
@@ -50,8 +50,8 @@ const Navigation = () => {
                     </Nav>
                 </Navbar.Collapse>
 
-                <Navbar.Collapse className="order-lg-2 order-md-2">
-                    <Nav className="ms-auto">
+                <Navbar.Collapse className="order-lg-2 order-md-2 justify-content-around" >
+                    <Nav className="">
                         <Nav.Link as={NavLink} to="/species" onClick={closeNavbar} className={isActive('/species')}>
                             Species
                         </Nav.Link>
