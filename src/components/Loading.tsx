@@ -14,7 +14,7 @@ const Loading: React.FC<IProps> = ({ show }) => {
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <img src={Stormtrooper} />
+            <img src={Stormtrooper} alt="stormtrooper checking the time" />
         </Modal>
     );
 }

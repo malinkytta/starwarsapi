@@ -23,7 +23,7 @@ const ErrorComponent: React.FC<IProps> = ({ children, show }) => {
                 <Modal.Title>
                     {children}
                 </Modal.Title>
-                <img src={R2D2} alt="" />
+                <img src={R2D2} alt="R2D2 falling over" />
                 <p className="pt-3"> It seems we've entered a galaxy far,
                     far away from the requested page.</p>
             </Modal.Body>
