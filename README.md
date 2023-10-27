@@ -7,18 +7,16 @@
 
 ## Requirements
 
-This project must adhere to the following prerequisites, regardless of the targeted grade level:
-
-- Utilize React (with useState, useEffect, and Fetch/axios) and React Router.
-- Communication with the API should be channeled through a dedicated intermediary layer (a "service") where Fetch/axios communications take place.
-- Implement a mobile-first design philosophy (as a matter of course).
-- Embrace a component-based architecture.
+- Use React, React Router, and specific tools like useState, useEffect, and Fetch/axios.
+- Communication with the API should be  through a layer (a "service") where Fetch/axios communications take place.
+- Responsive design (mobile-first).
+- Component-based architecture.
 - Ensure comprehensive loading and error handling to guard against the "Dark Side."
-- Employ TypeScript for precision (we are not Stormtroopers who always miss).
+- Utilize TypeScript for precision (we are not Stormtroopers who always miss).
 - Naturally, the code must be managed and versioned using Git, avoiding monstrous single commits.
 - All source code should feature correct indentation (of course!).
-- Deployment should be directed towards Netlify/GitHub Pages.
-
+- Deploy your project on Netlify or GitHub Pages."
+  
 ## Project Specification
 
 The application should provide the following functionality:
