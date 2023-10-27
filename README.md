@@ -44,3 +44,6 @@ Don't forget to incorporate pagination in the overview view, ensuring easy navig
 All API endpoints support pagination and search. Pagination can be initiated by appending `?page=X`, while searching is facilitated by adding `?search=X` to the endpoint URL. The API responses encompass all essential information, such as total counts and links to the next and previous pages.
 
 Access to all available endpoints can be found at the root URL: [Star Wars API](https://swapi.thehiveresistance.com/api).
+
+## Assignment Deadline: 14 days
+
