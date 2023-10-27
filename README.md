@@ -3,7 +3,7 @@
 
 ## Introduction
 
-BB-8 has entrusted you with a unique mission: to create a Star Wars encyclopedia, relieving him of the role of a mobile reference book so he can focus on more important matters, like rolling around and avoiding constant, trivial questions. He envisions a galaxy where his crew can effortlessly access information about everything in the Star Wars universe. Your pivotal mission is to construct this encyclopedia, thereby contributing to the peace of the galaxy.
+*BB-8 has entrusted you with a unique mission: to create a Star Wars encyclopedia, relieving him of the role of a mobile reference book so he can focus on more important matters, like rolling around and avoiding constant, trivial questions. He envisions a galaxy where his crew can effortlessly access information about everything in the Star Wars universe. Your pivotal mission is to construct this encyclopedia, thereby contributing to the peace of the galaxy.*
 
 ## Requirements
 
